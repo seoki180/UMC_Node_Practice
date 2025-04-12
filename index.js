@@ -1,5 +1,4 @@
 import express from "express" //esModule
-import { configDotenv } from "dotenv"
 const app = express()
 
 
