@@ -1,3 +1,5 @@
+import { missionDTO } from "./src/dto/mission.dto.js"
+import { mission_model } from "./src/model/mission.model.js"
 import { review_model } from "./src/model/review.model.js"
 import { store_model } from "./src/model/store.model.js"
 
@@ -35,7 +37,7 @@ async function testSelectStoreindex() {
     catch(err){console.log(err)}
 }
 
-testSelectStoreindex()
+// testSelectStoreindex()
 
 async function testInsertStore() {
     const data ={
@@ -51,4 +53,23 @@ async function testInsertStore() {
     catch(err){console.log(err)}
 }
 
-testInsertStore()
+// testInsertStore()
+
+async function testInsertMission() {
+    const store_index = 1
+    const body = {
+        contents : "10000원 이상으 식사를 하세요",
+        point : 100
+    }
+    body.store_index = store_index
+
+    const data = new missionDTO(body)
+    
+    try{
+        const res = await mission_model.insertMission(data)
+        console.log(res)
+    }
+    catch(err){console.log(err)}
+}
+
+testInsertMission()

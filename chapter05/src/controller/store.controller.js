@@ -1,12 +1,24 @@
+import { responsebase } from "../../response.js";
 import { storeDTO } from "../dto/store.dto.js";
 import { store_service } from "../service/store.service.js";
 
 export class store_controller{
     static async addStore(req,res){
         const data = new storeDTO(req.body)
-        const result = await store_service.addStore(data)
-
-        res.status(result.code)
-        return res.json(result)
+        try{
+            const result = await store_service.addStore(data)
+            return res.json(responsebase({
+                success : true,
+                message : "리뷰 작성 성공",
+                code : 200
+            },result))
+        }
+        catch(err){
+            return res.json(responsebase({
+                success : false,
+                message : "리뷰 작성 실패",
+                code : 400
+            },err.message))
+        }
     }
 }

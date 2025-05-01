@@ -1,8 +1,8 @@
-import { config } from 'dotenv'
+import dotenv from 'dotenv'
 import * as db from "mysql2"
 
-config("../../.env")
-// config()
+
+dotenv.config()
 
 const pool = db.createPool({
     connectionLimit: 10,

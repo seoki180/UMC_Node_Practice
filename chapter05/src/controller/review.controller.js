@@ -1,3 +1,4 @@
+import { responsebase } from "../../response.js"
 import { reviewDTO } from "../dto/review.dto.js"
 import { review_service } from "../service/review.service.js"
 
@@ -8,9 +9,21 @@ export class review_controller{
         const data = new reviewDTO(req.body)
         data.store_index = store_index
         data.created_date = date
-
-        const result =  await review_service.addReview(data)
-        res.status(result.code)
-        return res.json(result)
+        
+        try{
+            const result =  await review_service.addReview(data)
+            return res.json(responsebase({
+                success : true,
+                message : "리뷰 작성 성공",
+                code : 200
+            },result))
+        }
+        catch(err){
+            return res.json(responsebase({
+                success : false,
+                message : "리뷰 작성 실패",
+                code : 400
+            },err.message))
+        }
     }
 }

@@ -1,8 +1,11 @@
 import express from "express"
 import { review_controller } from "./src/controller/review.controller.js";
 import { store_controller } from "./src/controller/store.controller.js";
+import { mission_controller } from "./src/controller/misssion.controller.js";
+import { config } from "dotenv";
 
 const app = express()
+config()
 
 
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함 (JSON 형태의 요청 body를 파싱하기 위함)
@@ -11,11 +14,16 @@ app.use(express.urlencoded({ extended: false })); // 단순 객체 문자열 형
 
 app.post("/store",store_controller.addStore)
 app.post("/reviews/:store_index",review_controller.addReview)
-// app.post("/mission/:location_index")
+app.post("/mission/:store_index/add",mission_controller.addMisison)
 // app.post("/mission/:location_index/start")
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// 404 핸들러는 라우터 설정 **맨 아래**에 추가해야 함
+app.use((req, res) => {
+  res.status(404).json({
+      success: false,
+      message: '해당 경로를 찾을 수 없습니다.',
+      code : 404
+  })
+})
 
 app.listen(process.env.PORT || 3000);
