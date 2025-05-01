@@ -2,12 +2,13 @@ import express from "express"
 import { review_controller } from "./src/controller/review.controller.js";
 import { store_controller } from "./src/controller/store.controller.js";
 import { mission_controller } from "./src/controller/misssion.controller.js";
+import morgan from "morgan"
 import { config } from "dotenv";
 
 const app = express()
 config()
 
-
+app.use(morgan('dev'))
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함 (JSON 형태의 요청 body를 파싱하기 위함)
 app.use(express.urlencoded({ extended: false })); // 단순 객체 문자열 형태로 본문 데이터 해석
 
