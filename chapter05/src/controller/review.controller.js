@@ -4,10 +4,16 @@ import { review_service } from "../service/review.service.js"
 
 export class review_controller{
     static async addReview(req,res){
-        const date = new Date()
         const store_index = req.params.store_index
-        const data = new reviewDTO(req.body)
+        const user_index = req.headers.authorization
+        const date = new Date()
+        const body = req.body
+
+        console.log(user_index)
+
+        const data = new reviewDTO(body)
         data.store_index = store_index
+        data.user_index = user_index
         data.created_date = date
         
         try{

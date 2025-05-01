@@ -1,4 +1,4 @@
-import { missionDTO } from "./src/dto/mission.dto.js"
+import { missionAddDTO, missionStartDTO } from "./src/dto/mission.dto.js"
 import { mission_model } from "./src/model/mission.model.js"
 import { review_model } from "./src/model/review.model.js"
 import { store_model } from "./src/model/store.model.js"
@@ -63,7 +63,7 @@ async function testInsertMission() {
     }
     body.store_index = store_index
 
-    const data = new missionDTO(body)
+    const data = new missionAddDTO(body)
     
     try{
         const res = await mission_model.insertMission(data)
@@ -72,4 +72,21 @@ async function testInsertMission() {
     catch(err){console.log(err)}
 }
 
-testInsertMission()
+// testInsertMission()
+
+async function testStartMission() {
+    const body = { 
+        mission_index : 6,
+        user_index : 4
+    }
+
+    const data = new missionStartDTO(body)
+
+    try{
+        const res = await mission_model.startMission(data)
+        console.log(res)
+    }
+    catch(err){console.log(err)}
+}
+
+// testStartMission()

@@ -15,9 +15,9 @@ app.use(express.urlencoded({ extended: false })); // 단순 객체 문자열 형
 app.post("/store",store_controller.addStore)
 app.post("/reviews/:store_index",review_controller.addReview)
 app.post("/mission/:store_index/add",mission_controller.addMisison)
-// app.post("/mission/:location_index/start")
+app.post("/mission/:mission_index/start",mission_controller.startMission)
 
-// 404 핸들러는 라우터 설정 **맨 아래**에 추가해야 함
+// 404 핸들러는
 app.use((req, res) => {
   res.status(404).json({
       success: false,

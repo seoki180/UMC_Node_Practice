@@ -1,4 +1,3 @@
-import { responsebase } from "../../response.js";
 import { review_model } from "../model/review.model.js";
 
 export class review_service{
@@ -13,6 +12,5 @@ export class review_service{
             throw new Error("리뷰 작성 실패")
         }
         return res
-
     }
 }
