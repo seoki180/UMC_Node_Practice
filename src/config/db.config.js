@@ -1,4 +1,6 @@
 import * as db from "mysql2"
+import { config } from "dotenv"
+config()
 
 const pool = db.createPool({
     connectionLimit: 10,

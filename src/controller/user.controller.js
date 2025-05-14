@@ -18,18 +18,10 @@ export class user_controller{
         const data = new userDTO(body,prefer_food)  
         try{
             const result = await user_service.registUser(data)
-            return res.json(responsebase({
-                success : true,
-                message : "회원가입 성공",
-                code : 200
-            },result))
+            return res.status(HttpStatusCode.Ok).success(result)
         }
         catch(err){
-            return res.json(responsebase({
-                success : false,
-                message : "회원 가입 실패",
-                code : 400
-            },err.message))
+            return res.status(err.errorCode).error(err)
         }
     }
 }

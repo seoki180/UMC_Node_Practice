@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios"
 import { responsebase } from "../../response.js"
 import { reviewDTO } from "../dto/review.dto.js"
 import { review_service } from "../service/review.service.js"
@@ -9,8 +10,6 @@ export class review_controller{
         const date = new Date()
         const body = req.body
 
-        console.log(user_index)
-
         const data = new reviewDTO(body)
         data.store_index = store_index
         data.user_index = user_index
@@ -18,18 +17,10 @@ export class review_controller{
         
         try{
             const result =  await review_service.addReview(data)
-            return res.json(responsebase({
-                success : true,
-                message : "리뷰 작성 성공",
-                code : 200
-            },result))
+            res.status(HttpStatusCode.Ok).success(result)
         }
         catch(err){
-            return res.json(responsebase({
-                success : false,
-                message : "리뷰 작성 실패",
-                code : 400
-            },err.message))
+            res.status(err.errorCode).error(err)
         }
     }
 
@@ -37,18 +28,10 @@ export class review_controller{
         const user_index = parseInt(req.headers.authorization)
         try{
             const result = await review_service.getReviews(user_index)
-            return res.json(responsebase({
-                success : true,
-                message : "리뷰 조회 성공",
-                code : 200
-            },result))
+            res.status(HttpStatusCode.Ok).success(result)
         }
         catch(err){
-            return res.status(400).json(responsebase({
-                success : false,
-                message : "리뷰 조회 실패",
-                code : 400
-            },err.message))
+            res.status(err.errorCode).error(err)
         }
     }
     
@@ -56,18 +39,10 @@ export class review_controller{
         const store_index = parseInt(req.params.store_index)
         try{
             const result = await review_service.getReviewsStore(store_index)
-            return res.json(responsebase({
-                success : true,
-                message : "리뷰 조회 성공",
-                code : 200
-            },result))
+            res.status(HttpStatusCode.Ok).success(result)
         }
         catch(err){
-            return res.status(400).json(responsebase({
-                success : false,
-                message : "리뷰 조회 실패",
-                code : 400
-            },err.message))
+            res.status(err.errorCode).error(err)
         }
     }
 }

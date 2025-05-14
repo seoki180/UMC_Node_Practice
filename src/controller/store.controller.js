@@ -8,18 +8,10 @@ export class store_controller{
         
         try{
             const result = await store_service.addStore(data)
-            return res.json(responsebase({
-                success : true,
-                message : "가게 생성 성공",
-                code : 200
-            },result))
+            return res.status(HttpStatusCode.Ok).success(result)
         }
         catch(err){
-            return res.json(responsebase({
-                success : false,
-                message : "가게 생성 실패",
-                code : 400
-            },err.message))
+            return res.status(err.errorCode).error(err)
         }
     }
 }

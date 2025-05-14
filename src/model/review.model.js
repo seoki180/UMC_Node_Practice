@@ -31,11 +31,12 @@ export class review_model{
     }
 
     static async selectReviews(user_index){
-        return result = await prisma.REVIEWS.findMany({
+        const result = await prisma.REVIEWS.findMany({
             where : {
                 user_Index : user_index
             }
         })
+        return result
     }
 
     static async selectReviewsStore(store_index){

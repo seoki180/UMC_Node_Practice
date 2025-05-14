@@ -45,6 +45,7 @@ export class mission_model{
         })
     }
 
+    
     static async selectMissions(user_index) {
         const result = await prisma.USER_MISSION.findMany({
             where: {
@@ -71,4 +72,13 @@ export class mission_model{
         return result
     }
 
+    static async selectStore(data) {
+        const result = await prisma.STORES.findMany({
+            where : {
+                store_Index : data.store_index
+            }
+        })
+        return result
+        
+    }
 }
