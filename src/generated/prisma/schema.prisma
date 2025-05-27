@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AREAS {
+  area_Index        Int     @id @default(autoincrement())
+  area_name         String? @db.VarChar(100)
+  area_MissionCount Int?
+  area_StoreCount   Int?
+}
+
+model FOOD_TYPES {
+  food_index Int     @id
+  food_type  String? @db.VarChar(100)
+}
+
+model MISSIONS {
+  mission_Index    Int     @id @default(autoincrement())
+  mission_Contents String? @db.VarChar(100)
+  store_Index      Int
+  area_index       Int?
+  mission_Point    Int?    @default(0)
+}
+
+model REVIEWS {
+  review_Index      Int       @id @default(autoincrement())
+  review_Contents   String?   @db.VarChar(300)
+  review_CreatedDay DateTime? @db.Timestamp(0)
+  review_Stars      Int?
+  store_Index       Int
+  user_Index        Int
+}
+
+model STORES {
+  store_Index    Int     @id @default(autoincrement())
+  store_Name     String? @db.VarChar(100)
+  store_Location String? @db.VarChar(100)
+  area_index     Int
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model STORE_FOOD_TYPE {
+  store_Index Int
+  food_index  Int
+
+  @@ignore
+}
+
+model USERS {
+  user_Index    Int       @id @default(autoincrement())
+  user_Name     String?   @db.VarChar(100)
+  user_Id       String    @db.VarChar(100)
+  user_Password String    @db.VarChar(100)
+  user_Email    String?   @db.VarChar(100)
+  user_Point    Int?
+  user_Birth    DateTime? @db.DateTime(0)
+  user_Address  String?   @db.VarChar(100)
+  user_Gender   Int?      @db.TinyInt
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model USER_AREA {
+  user_Index Int
+  area_Index Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model USER_MISSION {
+  user_index     Int
+  mission_index  Int
+  mission_status Int? @default(0) @db.TinyInt
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model USER_PREFER_FOOD_TYPE {
+  user_Index Int
+  food_index Int
+
+  @@ignore
+}
