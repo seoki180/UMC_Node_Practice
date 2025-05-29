@@ -9,4 +9,11 @@ export class user_service{
         }
         return res
     }
+    static async updateUser(data) {
+        const res = await user_model.updateUser(data)
+        if(!res || res.length ==0){
+            throw new NotExist(500,"회원정보 수정 실패",res)
+        }
+        return res
+    }
 }

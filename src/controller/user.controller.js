@@ -61,4 +61,22 @@ export class user_controller{
             return res.status(err.errorCode).error(err)
         }
     }
+    static async updateUser(req,res){
+        // const body = {
+        //     name:req.body.name,
+        //     gender:req.body.gender,
+        //     birthday:req.body.birthday,
+        //     address : req.body.address,
+        //     id : req.body.id,
+        //     password : req.body.password
+        // }
+        const data = new userDTO(req.body,prefer_food)  
+        try{
+            const result = await user_service.updateUser(data)
+            return res.status(HttpStatusCode.Ok).success(result)
+        }
+        catch(err){
+            return res.status(err.errorCode).error(err)
+        }
+    }
 }

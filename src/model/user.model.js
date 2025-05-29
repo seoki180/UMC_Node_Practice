@@ -13,4 +13,22 @@ export class user_model{
             })
         })
     }
+    static async updateUser(data){
+        const {user_index, name, gender, birth_day, address, password} = data;
+        
+        const updateData = {};
+        if (name) updateData.user_Name = name;
+        if (gender) updateData.user_Gender = gender;
+        if (birth_day) updateData.user_Birth = birth_day;
+        if (address) updateData.user_Address = address;
+        if (password) updateData.user_Password = password;
+
+        const result = await prisma.USERS.updateMany({
+            where: {
+                user_index: user_index
+            },
+            data: updateData
+        });
+        return result;
+    }
 }

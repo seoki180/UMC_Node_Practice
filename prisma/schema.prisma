@@ -6,7 +6,12 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime @map("expires_at")
+}
 model AREAS {
   area_Index        Int     @id @default(autoincrement())
   area_name         String? @db.VarChar(100)
