@@ -2,12 +2,12 @@ import pool from "../config/db.config.js"
 export class user_model{
     static async insertUser(data){
         const query = `
-        insert into USERS(user_Id,user_Password,user_Name,user_Address,user_Gender,user_Birth)
-        values(?,?,?,?,?,?)`
-        const {id,password,name,gender,birth_day,address,prefer_food} = data
+        insert into USERS(user_Id,user_Password,user_Name,user_Address,user_Gender,user_Birth,user_Method)
+        values(?,?,?,?,?,?,?)`
+        const {id,password,name,gender,birth_day,address,method} = data
 
         return new Promise((resolve,reject)=>{
-            const res = pool.query(query,[id,password,name,address,gender,birth_day],(err,result)=>{
+            const res = pool.query(query,[id,password,name,address,gender,birth_day,method],(err,result)=>{
                 if(err) reject(err)
                 else resolve(result)
             })
@@ -30,5 +30,15 @@ export class user_model{
             data: updateData
         });
         return result;
+    }
+    static async loginUser(data){
+        const query = `select * from USERS where user_Id = ?`
+        const {id} = data
+        return new Promise((resolve,reject)=>{
+            const res = pool.query(query,[id],(err,result)=>{
+                if(err) reject(err)
+                else resolve(result)
+            })
+        })
     }
 }

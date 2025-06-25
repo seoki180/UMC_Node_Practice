@@ -32,13 +32,6 @@ const googleVerify = async (profile) => {
     where: { user_Id: email }
   });
 
-
-
-
-  const data  = {
-    name : profile.displayName,
-    id : profile._json.email
-  }
   // 사용자가 있으면 로그인 처리
   if (user) {
     return { 
@@ -49,6 +42,10 @@ const googleVerify = async (profile) => {
   }
   
   // 사용자가 없으면 회원가입 처리
+  const data  = {
+    name : profile.displayName,
+    id : profile._json.email
+  }
   const create = new userDTO(data)
   const created = await user_model.insertUser(create);
   if(created.affectedRows === 0) {

@@ -7,17 +7,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "dev": "nodemon -e js,json,prisma --exec && prisma generate && node app.js"
+    "dev": "npx prisma generate && nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^6.7.0",
+    "@prisma/client": "^6.10.1",
     "@quixo3/prisma-session-store": "^3.1.13",
     "axios": "^1.9.0",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.5.0",
     "errorhandler": "^1.5.1",
     "express": "^5.1.0",
@@ -29,8 +30,11 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-kakao": "^1.0.1",
-    "prisma": "^6.7.0",
     "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "prisma": "^6.10.1"
   }
 }

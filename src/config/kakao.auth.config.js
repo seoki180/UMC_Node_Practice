@@ -1,6 +1,8 @@
 import { Strategy as KakaoStrategy } from "passport-kakao";
 import dotenv from "dotenv";
 import { prisma } from "./prisma.config.js";
+import { userDTO } from "../dto/user.dto.js";
+import { user_model } from "../model/user.model.js";
 
 dotenv.config()
 
@@ -18,7 +20,7 @@ export const kakaoStrategy = new KakaoStrategy(
   
 const KakaoVerify = async (profile) => {
   console.log(profile);
-    const email = profile._json.kakao_account.email;
+  const email = profile._json.kakao_account.email;
   if (!email) {
     throw new Error(`profile.email was not found: ${profile}`);
   }
@@ -36,20 +38,19 @@ const KakaoVerify = async (profile) => {
       name: user.user_Name 
     };
   }
-  else {
-    return null;
-  }
   // 사용자가 없으면 회원가입 처리
-//   const created = await prisma.USERS.create({
-//     data: {
-//       email,
-//       name: profile.displayName,
-//       gender: "추후 수정",
-//       birth: new Date(1970, 0, 1),
-//       address: "추후 수정",
-//       detailAddress: "추후 수정",
-//       phoneNumber: "추후 수정",
-//     },
-//   });
+  const data  = {
+    name : profile.displayName,
+    id : profile._json.kakao_account.email,
+    method : "kakao"
+  }
+  const create = new userDTO(data)
+  const created = await user_model.insertUser(create);
+  if(created.affectedRows === 0) {
+    throw new Error("회원가입에 실패했습니다.");
+  }
+
+  return { id: create.id, email: create.email, name: create.name };
+
 
 }

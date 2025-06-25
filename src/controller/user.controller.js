@@ -79,4 +79,15 @@ export class user_controller{
             return res.status(err.errorCode).error(err)
         }
     }
+    
+    static async loginUser(req,res){
+        const data = new userDTO(req.body)
+        try{
+            const result = await user_service.loginUser(data)
+            return res.status(HttpStatusCode.Ok).success(result)
+        }
+        catch(err){
+            return res.status(err.errorCode).error(err)
+        }   
+    }
 }

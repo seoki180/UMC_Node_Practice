@@ -1,21 +1,20 @@
-import { config } from "dotenv";
-import { response } from "./src/config/response.js";
-import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import { prisma } from "./src/config/prisma.config.js";
 import express from "express"
 import session from "express-session";
 import morgan from "morgan"
-import { review_controller } from "./src/controller/review.controller.js";
-import { store_controller } from "./src/controller/store.controller.js";
-// import { mission_controller } from "./src/controller/misssion.controller.js";
-import { user_controller } from "./src/controller/user.controller.js";
-import { googleStrategy } from "./src/config/google.auth.config.js";
-import { kakaoStrategy } from "./src/config/kakao.auth.config.js";
-import { NotFound } from "./src/config/error.js";
 import compression from "compression";
 import swaggerSetup from "./src/config/swagger.js";
 import mission_Router from "./src/router/mission.router.js";
 import passport from "passport";
+import { config } from "dotenv";
+import { response } from "./src/config/response.js";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
+import { prisma } from "./src/config/prisma.config.js";
+import { review_controller } from "./src/controller/review.controller.js";
+import { store_controller } from "./src/controller/store.controller.js";
+import { user_controller } from "./src/controller/user.controller.js";
+import { googleStrategy } from "./src/config/google.auth.config.js";
+import { kakaoStrategy } from "./src/config/kakao.auth.config.js";
+import { NotFound } from "./src/config/error.js";
 
 config()
 const app = express()
@@ -39,6 +38,8 @@ app.use("/mission",mission_Router)
 app.post("/store",store_controller.addStore)
 
 app.post("/user/regist",user_controller.registUser)
+
+app.post("/user/login",user_controller.loginUser)
 
 app.post("/reviews/:store_index",review_controller.addReview)
 
